@@ -22,6 +22,11 @@ public class GameContainerTest {
         assertNotNull(gameContainer);
     }
 
+    @Test
+    public void test_run_with_all_draw(){
+        assertEquals(GameEnding.DRAW,gameContainer.run());
+    }
+
 
 
 }
