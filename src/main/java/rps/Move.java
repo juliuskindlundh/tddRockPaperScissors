@@ -1,5 +1,5 @@
 package rps;
 
 public enum Move {
-    ROCK,PAPER,SCISSORS;
+    ROCK,PAPER,SCISSORS,NOT_A_REAL_MOVE;
 }

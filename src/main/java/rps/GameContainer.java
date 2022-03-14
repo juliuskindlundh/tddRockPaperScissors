@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
+import java.util.Scanner;
 
 @Component
 public class GameContainer {
@@ -23,5 +24,21 @@ public class GameContainer {
             default: cpuMove = Move.SCISSORS;
         }
         return cpuMove;
+    }
+
+    public Move readPlayerMove(Scanner scanner) {
+        String input = scanner.nextLine();
+        if(input.equalsIgnoreCase(Move.ROCK.name())){
+            return Move.ROCK;
+        }
+        else if(input.equalsIgnoreCase(Move.PAPER.name())){
+            return Move.PAPER;
+        }
+        else if(input.equalsIgnoreCase(Move.SCISSORS.name())){
+            return Move.SCISSORS;
+        }
+        else {
+            return Move.NOT_A_REAL_MOVE;
+        }
     }
 }

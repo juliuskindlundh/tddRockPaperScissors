@@ -3,15 +3,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.Assert;
 import rps.GameContainer;
 import rps.Move;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 
 @SpringBootTest(classes = {GameContainer.class})
@@ -23,8 +22,8 @@ public class GameContainerTest {
 
     @BeforeEach
     public void setUp(){
-        scanner = mock(Scanner.class);
     }
+
     @Test
     public void test(){
         assertNotNull(gameContainer);
@@ -37,25 +36,34 @@ public class GameContainerTest {
 
     @Test
     public void process_handle_good_input_ROCK_test(){
-        when(scanner.nextLine()).thenReturn("ROCK");
+        String input = Move.ROCK.name();
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        scanner = new Scanner(System.in);
         assertEquals(Move.ROCK,gameContainer.readPlayerMove(scanner));
     }
 
     @Test
     public void process_handle_good_input_PAPER_test(){
-        when(scanner.nextLine()).thenReturn("PAPER");
+        String input = Move.PAPER.name();
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        scanner = new Scanner(System.in);
         assertEquals(Move.PAPER,gameContainer.readPlayerMove(scanner));
     }
 
     @Test
     public void process_handle_good_input_SCISSORS_test(){
-        when(scanner.nextLine()).thenReturn("SCISSORS");
+        String input = Move.SCISSORS.name();
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        scanner = new Scanner(System.in);
         assertEquals(Move.SCISSORS,gameContainer.readPlayerMove(scanner));
     }
 
     @Test
     public void process_handle_bad_input_test(){
-        fail();
+        String input = "Move.SCISSORS.name()";
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        scanner = new Scanner(System.in);
+        assertEquals(Move.NOT_A_REAL_MOVE,gameContainer.readPlayerMove(scanner));
     }
 
 }
