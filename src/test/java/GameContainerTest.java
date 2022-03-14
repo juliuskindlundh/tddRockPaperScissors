@@ -27,7 +27,7 @@ public class GameContainerTest {
     }
 
     @Test
-    public void process_handle__good_input_test(){
+    public void process_handle_good_input_test(){
         fail();
     }
 
