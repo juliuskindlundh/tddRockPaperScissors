@@ -1,10 +1,11 @@
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import rps.GameContainer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+@SpringBootTest(classes = {GameContainer.class})
 public class rpsTest {
 
     @Autowired
