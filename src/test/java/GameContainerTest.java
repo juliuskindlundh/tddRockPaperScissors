@@ -41,6 +41,22 @@ public class GameContainerTest {
         assertEquals(Result.DRAW,gameContainer.playRound());
     }
 
+    @Test
+    public void do_one_round_result_player_lose_test(){
+        when(gameContainer.gameLogic.readPlayerMove()).thenReturn(Move.ROCK);
+        when(gameContainer.gameLogic.generateCPUMove()).thenReturn(Move.PAPER);
+        when(gameContainer.gameLogic.makeMove(Move.ROCK,Move.PAPER)).thenReturn(Result.LOSE);
+        assertEquals(Result.LOSE,gameContainer.playRound());
+    }
+
+    @Test
+    public void do_one_round_result_player_win_test(){
+        when(gameContainer.gameLogic.readPlayerMove()).thenReturn(Move.ROCK);
+        when(gameContainer.gameLogic.generateCPUMove()).thenReturn(Move.SCISSORS);
+        when(gameContainer.gameLogic.makeMove(Move.ROCK,Move.SCISSORS)).thenReturn(Result.WIN);
+        assertEquals(Result.WIN,gameContainer.playRound());
+    }
+
 
 
 }
