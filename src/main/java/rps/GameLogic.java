@@ -65,13 +65,13 @@ public class GameLogic {
             System.out.print("Make your move...");
             String input = scanner.nextLine();
             if(input.equalsIgnoreCase(Move.ROCK.name())){
-                return Move.ROCK;
+                move = Move.ROCK;
             }
             else if(input.equalsIgnoreCase(Move.PAPER.name())){
-                return Move.PAPER;
+                move = Move.PAPER;
             }
             else if(input.equalsIgnoreCase(Move.SCISSORS.name())){
-                return Move.SCISSORS;
+                move = Move.SCISSORS;
             }
             else{
                 System.out.println("...Not a valid move");
