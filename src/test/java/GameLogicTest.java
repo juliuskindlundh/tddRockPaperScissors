@@ -3,6 +3,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import rps.GameLogic;
@@ -15,10 +17,10 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = {GameLogic.class})
 public class GameLogicTest {
@@ -98,7 +100,7 @@ public class GameLogicTest {
         assertEquals(argRes.result,gameLogic.shouldContinue(argRes.score, argRes.rounds));
     }
 
-    private static Object shouldContinueProvider(){
+    private static Stream<ArgRes> shouldContinueProvider(){
         ArgRes[] argRes = {
                 new ArgRes(0,0,true),
                 new ArgRes(0,1,true),
@@ -123,5 +125,35 @@ public class GameLogicTest {
             this.rounds = rounds;
             this.result = result;
         }
+    }
+
+    @Test
+    public void do_one_round_result_draw_test(){
+        String input = Move.ROCK.name();
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        gameLogic.scanner = new Scanner(System.in);
+        gameLogic.random = mock(Random.class);
+        when(gameLogic.random.nextInt(3)).thenReturn(0);
+        assertEquals(Result.DRAW,gameLogic.playRound());
+    }
+
+    @Test
+    public void do_one_round_result_player_lose_test(){
+        String input = Move.ROCK.name();
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        gameLogic.scanner = new Scanner(System.in);
+        gameLogic.random = mock(Random.class);
+        when(gameLogic.random.nextInt(3)).thenReturn(1);
+        assertEquals(Result.LOSE,gameLogic.playRound());
+    }
+
+    @Test
+    public void do_one_round_result_player_win_test(){
+        String input = Move.ROCK.name();
+        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
+        gameLogic.scanner = new Scanner(System.in);
+        gameLogic.random = mock(Random.class);
+        when(gameLogic.random.nextInt(3)).thenReturn(2);
+        assertEquals(Result.WIN,gameLogic.playRound());
     }
 }

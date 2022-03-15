@@ -10,18 +10,27 @@ public class GameContainer {
         this.gameLogic = gameLogic;
     }
 
-    public String playBestOutOfThree(){
+    public Result playBestOutOfThree() {
         int score = 0;
         int rounds = 0;
-        //while ()
-        return null;
-    }
-
-
-
-    public Result playRound() {
-        Result result = gameLogic.makeMove(gameLogic.readPlayerMove(),gameLogic.generateCPUMove());
-        System.out.println(result.name());
-        return result;
+        while (gameLogic.shouldContinue(score, rounds)) {
+            Result result = gameLogic.playRound();
+            System.out.println("Result:"+result);
+            if(result.equals(Result.WIN)){
+                score++;
+            }
+            else if(result.equals(Result.LOSE)){
+                score--;
+            }
+            rounds++;
+        }
+        System.out.println(score);
+        if (score == 0) {
+            return Result.DRAW;
+        } else if (score < 0) {
+            return Result.LOSE;
+        } else {
+            return Result.WIN;
+        }
     }
 }

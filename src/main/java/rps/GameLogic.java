@@ -1,11 +1,8 @@
 package rps;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Random;
 import java.util.Scanner;
 
-@Component
 public class GameLogic {
 
     public Random random;
@@ -53,10 +50,7 @@ public class GameLogic {
             break;
             case 1: cpuMove = Move.PAPER;
             break;
-            case 2: cpuMove = Move.SCISSORS;
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + a);
+            default: cpuMove = Move.SCISSORS;
         }
         return cpuMove;
     }
@@ -85,5 +79,11 @@ public class GameLogic {
             return false;
         }
         return true;
+    }
+
+    public Result playRound() {
+        Result result = makeMove(readPlayerMove(),generateCPUMove());
+        System.out.println(result.name());
+        return result;
     }
 }
