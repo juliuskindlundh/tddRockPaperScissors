@@ -7,6 +7,8 @@ import rps.GameLogic;
 import rps.Move;
 import rps.Result;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,12 +21,11 @@ public class GameContainerTest {
 
     @Autowired
     GameContainer gameContainer;
-    Scanner scanner;
+    Object scanner;
 
     @BeforeEach
     public void setUp(){
         gameContainer.gameLogic = mock(GameLogic.class);
-        scanner = new Scanner(System.in);
     }
 
     @Test
@@ -33,11 +34,11 @@ public class GameContainerTest {
     }
 
     @Test
-    public void do_one_round_test(){
+    public void do_one_round_result_draw_test(){
+        when(gameContainer.gameLogic.readPlayerMove()).thenReturn(Move.ROCK);
         when(gameContainer.gameLogic.generateCPUMove()).thenReturn(Move.ROCK);
-        when(gameContainer.gameLogic.readPlayerMove(scanner)).thenReturn(Move.ROCK);
+        when(gameContainer.gameLogic.makeMove(Move.ROCK,Move.ROCK)).thenReturn(Result.DRAW);
         assertEquals(Result.DRAW,gameContainer.playRound());
-
     }
 
 
