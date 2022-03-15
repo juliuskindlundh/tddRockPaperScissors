@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import rps.GameLogic;
@@ -12,9 +13,12 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Random;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = {GameLogic.class})
 public class GameLogicTest {
@@ -49,9 +53,12 @@ public class GameLogicTest {
         assertEquals(Result.DRAW,gameLogic.makeMove(Move.SCISSORS,Move.SCISSORS));
     }
 
-    @Test
-    public void generate_cpu_move(){
-        Assertions.assertInstanceOf(Move.class,gameLogic.generateCPUMove());
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,2})
+    public void generate_cpu_move(Integer randomNumber){
+        gameLogic.random = mock(Random.class);
+        when(gameLogic.random.nextInt(3)).thenReturn(randomNumber);
+        assertEquals(randomNumber,gameLogic.generateCPUMove().value);
     }
 
     @Test
