@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import rps.GameLogic;
@@ -8,6 +10,8 @@ import rps.Result;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,5 +84,38 @@ public class GameLogicTest {
         System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         gameLogic.scanner = new Scanner(System.in);
         assertEquals(Move.NOT_A_REAL_MOVE,gameLogic.readPlayerMove());
+    }
+
+    @ParameterizedTest
+    @MethodSource("shouldContinueProvider")
+    public void shouldContinue_test(ArgRes argRes){
+        assertEquals(argRes.result,gameLogic.shouldContinue(argRes.score, argRes.rounds));
+    }
+
+    private static Object shouldContinueProvider(){
+        ArgRes[] argRes = {
+                new ArgRes(0,0,true),
+                new ArgRes(0,1,true),
+                new ArgRes(0,2,true),
+                new ArgRes(0,3,false),
+                new ArgRes(1,1,true),
+                new ArgRes(2,2,false),
+                new ArgRes(-1,1,true),
+                new ArgRes(-2,2,false),
+                new ArgRes(1,2,true),
+        };
+        return Arrays.stream(argRes);
+    }
+
+    private static class ArgRes{
+        public int score;
+        public int rounds;
+        public boolean result;
+
+        public ArgRes(int score, int rounds, Boolean result) {
+            this.score = score;
+            this.rounds = rounds;
+            this.result = result;
+        }
     }
 }
