@@ -8,7 +8,7 @@ import java.util.Scanner;
 @Component
 public class GameLogic {
 
-    private Random random;
+    public Random random;
     public Scanner scanner;
 
     GameLogic(){
@@ -50,7 +50,9 @@ public class GameLogic {
         Move cpuMove;
         switch (a){
             case 0: cpuMove = Move.ROCK;
+            break;
             case 1: cpuMove = Move.PAPER;
+            break;
             case 2: cpuMove = Move.SCISSORS;
                 break;
             default:

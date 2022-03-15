@@ -1,5 +1,10 @@
 package rps;
 
 public enum Move {
-    ROCK,PAPER,SCISSORS,NOT_A_REAL_MOVE;
+    ROCK(0),PAPER(1),SCISSORS(2),NOT_A_REAL_MOVE(3);
+
+    public int value;
+    Move(int i) {
+        this.value = i;
+    }
 }
