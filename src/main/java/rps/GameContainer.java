@@ -3,16 +3,19 @@ package rps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
 import java.util.Scanner;
+
 
 @Component
 public class GameContainer {
 
-    Random random;
+    public GameLogic gameLogic;
 
-    GameContainer(){
-        random = new Random();
+    public GameContainer(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
     }
 
+    public Result playRound() {
+        return gameLogic.makeMove(gameLogic.readPlayerMove(),gameLogic.generateCPUMove());
+    }
 }

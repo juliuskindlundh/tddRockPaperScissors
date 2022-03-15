@@ -8,33 +8,36 @@ import java.util.Scanner;
 @Component
 public class GameLogic {
 
-    Random random;
+    private Random random;
+    public Scanner scanner;
+
     GameLogic(){
         random = new Random();
+        scanner = new Scanner(System.in);
     }
 
-    public int makeMove(Move playerMove, Move cpuMove) {
-        int result = 0;
+    public Result makeMove(Move playerMove, Move cpuMove) {
+        Result result = Result.DRAW;
         if(playerMove.equals(cpuMove)){
             return result;
         }
         switch (playerMove){
             case ROCK -> {
                 switch (cpuMove) {
-                    case PAPER -> result = -1;
-                    case SCISSORS -> result = 1;
+                    case PAPER -> result = Result.LOSE;
+                    case SCISSORS -> result = Result.WIN;
                 }
             }
             case PAPER -> {
                 switch (cpuMove) {
-                    case ROCK -> result = 1;
-                    case SCISSORS -> result = -1;
+                    case ROCK -> result = Result.WIN;
+                    case SCISSORS -> result = Result.LOSE;
                 }
             }
             case SCISSORS -> {
                 switch (cpuMove) {
-                    case ROCK -> result = -1;
-                    case PAPER -> result = 1;
+                    case ROCK -> result = Result.LOSE;
+                    case PAPER -> result = Result.WIN;
                 }
             }
         }
@@ -48,12 +51,15 @@ public class GameLogic {
         switch (a){
             case 0: cpuMove = Move.ROCK;
             case 1: cpuMove = Move.PAPER;
-            default: cpuMove = Move.SCISSORS;
+            case 2: cpuMove = Move.SCISSORS;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + a);
         }
         return cpuMove;
     }
 
-    public Move readPlayerMove(Scanner scanner) {
+    public Move readPlayerMove() {
         String input = scanner.nextLine();
         if(input.equalsIgnoreCase(Move.ROCK.name())){
             return Move.ROCK;
