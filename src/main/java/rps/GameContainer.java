@@ -1,6 +1,5 @@
 package rps;
 import org.springframework.stereotype.Component;
-
 @Component
 public class GameContainer {
 
@@ -11,11 +10,11 @@ public class GameContainer {
     }
 
     public Result playBestOutOfThree() {
+        System.out.println("Lets play som ROCK PAPER SCISSORS!");
         int score = 0;
         int rounds = 0;
         while (gameLogic.shouldContinue(score, rounds)) {
             Result result = gameLogic.playRound();
-            System.out.println("Result:"+result);
             if(result.equals(Result.WIN)){
                 score++;
             }
@@ -24,7 +23,6 @@ public class GameContainer {
             }
             rounds++;
         }
-        System.out.println(score);
         if (score == 0) {
             return Result.DRAW;
         } else if (score < 0) {
