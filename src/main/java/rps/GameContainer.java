@@ -1,10 +1,5 @@
 package rps;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Scanner;
-
 
 @Component
 public class GameContainer {
@@ -15,7 +10,18 @@ public class GameContainer {
         this.gameLogic = gameLogic;
     }
 
+    public String playBestOutOfThree(){
+        int score = 0;
+        int rounds = 0;
+        //while ()
+        return null;
+    }
+
+
+
     public Result playRound() {
-        return gameLogic.makeMove(gameLogic.readPlayerMove(),gameLogic.generateCPUMove());
+        Result result = gameLogic.makeMove(gameLogic.readPlayerMove(),gameLogic.generateCPUMove());
+        System.out.println(result.name());
+        return result;
     }
 }

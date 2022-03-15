@@ -74,4 +74,14 @@ public class GameLogic {
             return Move.NOT_A_REAL_MOVE;
         }
     }
+
+    public boolean shouldContinue(int score,int rounds){
+        if(rounds == 3){
+            return false;
+        }
+        if(score == 2 || score == -2){
+            return false;
+        }
+        return true;
+    }
 }

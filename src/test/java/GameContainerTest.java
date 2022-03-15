@@ -57,6 +57,14 @@ public class GameContainerTest {
         assertEquals(Result.WIN,gameContainer.playRound());
     }
 
+    @Test
+    public void play_best_out_of_3_rounds_win_test(){
+        when(gameContainer.gameLogic.readPlayerMove()).thenReturn(Move.ROCK);
+        when(gameContainer.gameLogic.generateCPUMove()).thenReturn(Move.SCISSORS);
+        when(gameContainer.gameLogic.makeMove(Move.ROCK,Move.SCISSORS)).thenReturn(Result.WIN);
+
+    }
+
 
 
 }
