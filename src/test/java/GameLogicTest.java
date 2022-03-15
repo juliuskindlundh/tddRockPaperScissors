@@ -84,14 +84,6 @@ public class GameLogicTest {
         assertEquals(Move.SCISSORS,gameLogic.readPlayerMove());
     }
 
-    @Test
-    public void process_handle_bad_input_test(){
-        String input = "Move.SCISSORS.name()";
-        System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
-        gameLogic.scanner = new Scanner(System.in);
-        assertEquals(Move.NOT_A_REAL_MOVE,gameLogic.readPlayerMove());
-    }
-
     @ParameterizedTest
     @MethodSource("shouldContinueProvider")
     public void shouldContinue_test(ArgRes argRes){
