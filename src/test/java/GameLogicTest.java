@@ -25,7 +25,6 @@ public class GameLogicTest {
 
     @Autowired
     GameLogic gameLogic;
-    Scanner scanner;
 
     @Test
     public void test(){

@@ -1,15 +1,14 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import rps.GameContainer;
 import rps.GameLogic;
 import rps.Move;
 import rps.Result;
-
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -21,7 +20,6 @@ public class GameContainerTest {
 
     @Autowired
     GameContainer gameContainer;
-    Object scanner;
 
     @BeforeEach
     public void setUp(){
@@ -58,10 +56,11 @@ public class GameContainerTest {
     }
 
     @Test
-    public void play_best_out_of_3_rounds_win_test(){
-        when(gameContainer.gameLogic.readPlayerMove()).thenReturn(Move.ROCK);
-        when(gameContainer.gameLogic.generateCPUMove()).thenReturn(Move.SCISSORS);
-        when(gameContainer.gameLogic.makeMove(Move.ROCK,Move.SCISSORS)).thenReturn(Result.WIN);
+    @ParameterizedTest
+    @ValueSource(strings = {"WIN","LOSE","DRAW"})
+    public void play_best_out_of_3_rounds_win_test(String input){
+        when(gameContainer.playRound()).thenReturn(Result.valueOf(input));
+        assertEquals(Result.valueOf(input),gameContainer.playBestOutOfThree());
 
     }
 
