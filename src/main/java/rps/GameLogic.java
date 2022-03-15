@@ -1,8 +1,11 @@
 package rps;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 import java.util.Scanner;
 
+@Component
 public class GameLogic {
 
     public Random random;
@@ -52,23 +55,29 @@ public class GameLogic {
             break;
             default: cpuMove = Move.SCISSORS;
         }
+        System.out.println("CPU plays "+cpuMove.name());
         return cpuMove;
     }
 
     public Move readPlayerMove() {
-        String input = scanner.nextLine();
-        if(input.equalsIgnoreCase(Move.ROCK.name())){
-            return Move.ROCK;
+        Move move = Move.NOT_A_REAL_MOVE;
+        while (move.equals(Move.NOT_A_REAL_MOVE)){
+            System.out.print("Make your move...");
+            String input = scanner.nextLine();
+            if(input.equalsIgnoreCase(Move.ROCK.name())){
+                move = Move.ROCK;
+            }
+            else if(input.equalsIgnoreCase(Move.PAPER.name())){
+                move = Move.PAPER;
+            }
+            else if(input.equalsIgnoreCase(Move.SCISSORS.name())){
+                move = Move.SCISSORS;
+            }
+            else{
+                System.out.println("...Not a valid move");
+            }
         }
-        else if(input.equalsIgnoreCase(Move.PAPER.name())){
-            return Move.PAPER;
-        }
-        else if(input.equalsIgnoreCase(Move.SCISSORS.name())){
-            return Move.SCISSORS;
-        }
-        else {
-            return Move.NOT_A_REAL_MOVE;
-        }
+        return move;
     }
 
     public boolean shouldContinue(int score,int rounds){
